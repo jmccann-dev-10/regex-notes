@@ -35,7 +35,6 @@ google.com|yes
 www.amazon.com|yes
 mongodb.com/|yes
 www.wizard.gov/|no
-```
 ## Day 2
 ### Advanced Groups
 #### a. Capturing Groups
