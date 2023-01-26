@@ -2,6 +2,42 @@
 - regex: `Hello`
 - matches: `Hello`
 - notes:  Will also match the first few characters of `HelloTheRestOfThisDoesnNotMatch`.  This is a problem if we only want to match a single word that is exactly "Hello"
+- PROBLEM:  What characters are NOT treated as literals?
+
+### Using the `.`
+- regex: `agent.`
+- sentence: `Agent Parker, please go to the agents lounge and speak to your supervising agent.`
+- matches: `agents` and `agent.`
+- notes: The `.` character has special meaning in a regular expression.  It is a while card that acts as a substitute for any character.  In this example the "s" and the "." both match the wildcard.  If we were to also modify the first word (Agent) to start with a lower-case "a", then we would match `agent `.  In this example the space after agent would also be included in the match because of the `.` in our regular expression.
+
+INTERLUDE - quick overview of meta characters
+
+### Character classes
+- regex: `[Hh]ello`
+- matches twice: `Hello hello`
+- notes: Character classes are created by using square brackets and including a number of options.  Think of this like the `.` character but with a limited number of options we can define.
+
+### Character classes continued
+- regex: `[jhm]ello`
+- matches 3 times: `hello jello mello`
+- does not match: `Hello Jello Mello`
+- notes: Notice that all of the characters in the character class are still case sensitive so the capitalized versions do not match.
+
+### Character classes with ranges
+- regex: `[a-gA-G]`
+- matches 7 times: `a b c D e F g h`
+- does not match `h`
+- Using the dash in a character class we can define a range to use.
+
+### Shorthands for common classes
+- long form regex: `[A-Za-z0-9_]`
+- matches 5 times: `A bC_0` (does not match the space)
+- shorthand regex: `\w` for "word" character
+
+### Character class negation
+- long regex: `[^A-Za-z0-9_]`
+- matches 3 times: `Hello. $agent` (the period, space, and dollar sign)
+- shorthand regex: `\W` capitalizing the shorthand gives the inverse or negation of the original.
 
 ### Single word
 - regex: `\bHello\b`
