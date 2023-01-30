@@ -17,7 +17,7 @@ Any character specified inside of the regex can be found by just typing it in.  
 |Example|Highlight|Notes|
 |:--|:--|:--|
 |`a`|**a** b**a**n**a**n**a** is very t**a**sty|Matches any `a` found in the sentence|
-|`bat`|Batman threw a **bat**arang at the lamp|Able to match the bat in batarang, but ignores `Batman` because of the capitalization.|
+|`bat`|Batman threw a **bat**arang at the lamp|Able to match the `bat` in `bat`arang, but ignores `Bat`man because of the capitalization.|
 
 
 #### c. Meta Characters
@@ -55,8 +55,26 @@ Character classes also support ranges of characters as well.  The syntax for ran
 |`[a-z]`|any lower case character once|this is the syntax for the range of lower case characters
 |`[a-zA-Z]`|any lower case or upper case character|this example has two ranges `a-z` and `A-Z`
 |`[A-z]`|any lower case or upper case character plus `[`, `\`, `]`, `^`, `_`, and `` ` ``| Uppercase `Z` is character code 90, and the lowercase a is character code 97, the other characters specified are the characters between the two on an ascii table (91-96)
-|`[z-a]`|nothing|the range has to start from a smaller character code to a larger, since `z` is 122, there are no characters codes larger than 122 and smaller than 97 at the same time.
-#### c. Short Hand
+|`[z-a]`|nothing|the range has to start from a smaller character code to a larger, since `z` is 122, there are no characters codes both larger than 122 and smaller than 97 at the same time.
+
+#### c. Short-Hand
+There are serveral short-hand tokens supported in RegEx for common character classes
+These can be used in place of the squre brackets but lack the flexibility of specifying your own.  If all of the characters can be captured, they can easily be used by themselves, but if there is a character that shouldn't be added then it's better to make your own character class.  Each of these are represented by a backslash and a lowercase alphabet character:
+
+|Short-Hand|Equivilent Character Class|Notes
+|:--|:--|:--|
+|`\d`|`[0-9]`|Any ***D***igit|
+|`\w`|`[A-Za-Z0-9_]`|Any ***W***ord character (letter, digit, or underscore)|
+|`\s`|`[\t\r\n ]`|Any Whitespace character (tab, new line, carriage return, or ***S***pace)|
+
+These can also be combined with other characters inside of a character class to expand them further
+
+___EX: Finding negative and positive numbers___
+
+__"12 -14 52 60 -2 456 25"__
+
+For the above example, we can use `\d` to select any single digit character.  If we place a hyphen infront of it (`-\d`), we might asssume this would help us find the negative numbers as well, but only the `-1` and `-2` light up.  If we wrap character combination into square brackets (`[-\d]`), expanding the short hand inside of the character class, then all of the numbers and hyphens light up in this case.  At this point we're still only grabbing single characters in our patterns, but we'll address that in the next section.
+
 #### d. Negations
 ### 3. Quantifiers
 #### a. Short Hand
