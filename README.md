@@ -64,7 +64,7 @@ These can be used in place of the squre brackets but lack the flexibility of spe
 |Short-Hand|Equivilent Character Class|Notes
 |:--|:--|:--|
 |`\d`|`[0-9]`|Any ***D***igit|
-|`\w`|`[A-Za-Z0-9_]`|Any ***W***ord character (letter, digit, or underscore)|
+|`\w`|`[A-Za-z0-9_]`|Any ***W***ord character (letter, digit, or underscore)|
 |`\s`|`[\t\r\n ]`|Any Whitespace character (tab, new line, carriage return, or ***S***pace)|
 
 These can also be combined with other characters inside of a character class to expand them further
@@ -76,15 +76,33 @@ __"12 -14 52 60 -2 456 25"__
 For the above example, we can use `\d` to select any single digit character.  If we place a hyphen infront of it (`-\d`), we might asssume this would help us find the negative numbers as well, but only the `-1` and `-2` light up.  If we wrap character combination into square brackets (`[-\d]`), expanding the short hand inside of the character class, then all of the numbers and hyphens light up in this case.  At this point we're still only grabbing single characters in our patterns, but we'll address that in the section on quantifiers.
 
 #### d. Negations
+Character classes and the short hands all have negations built into RegEx, which is really just a fancy way of saying "do the opposite".  For character classes, placing a carrot (`^`) at the beginning of the character class will tell RegEx to match any character not included.  One note is the carrot needs to be at the beginning of the character class, otherwise RegEx will match a literal carrot inside of the string instead.
+
+|Example|Meaning|
+|:--|:--|
+|`[d-f]`|Match `d`, `e`, or `f` in a string|
+|`[1a-z^]`|Match any lower case character, `1`, or `^`|
+|`[^dg1]`|Match any character as long as it's not a `d`, `g`, or `1`|
+|`[^a-z]`|Match any character as long as it's not a lower case character|
+
+The short-hand tokens above also have negations as well, they are represented with a backslash and uppercase character to do the exact opposite of the lowercase couterpart.
+
+|Short-Hand|Equivilent Character Class|Notes
+|:--|:--|:--|
+|`\D`|`[^0-9]`|Match anything not a digit|
+|`\W`|`[^A-Za-z0-9_]`|Match anything not a word character (letter, digit, or underscore)|
+|`\S`|`[^\t\r\n ]`|Match anything not a whitespace character (tab, new line, carriage return, or Space)|
+
 ### 3. Quantifiers
 #### a. Short Hand
+So far we've seen how to match characters, combinations, and patterns, but sometimes we need to group multiple 
 #### b. Exact
 #### c. Lazy Matching
 ### 4. Groups
 Groups can be used to treat sequences of characters as a single unit. This can be achieved by placing paranthesis around a particular pattern. These groups can then have additional quantifiers used on them.
 
 EX: Web Addresses:
-Below is a list of web addresses, some with and without a www in front.  If we only wanted to match `.com` addresses we could use the following regex to accomplish this  The `(w{3}.)?` would make the `www` an optional group to match both cases:
+Below is a list of web addresses, some with and without a www in front.  If we only wanted to match `.com` addresses we could use the following regex to accomplish this  The `(w{3}\.)?` would make the `www.` an optional group to match both cases:
 `(w{3}\.)?[\w-]+.com`
 
 address|match
