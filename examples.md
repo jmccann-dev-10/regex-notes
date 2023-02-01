@@ -72,3 +72,19 @@ either a capital or lower-case "h", and `[abcAB]` would match "a", "b", "c", "A"
 EXCEPT the ones included in the brackets. Also note the presence of the `\b` here.  Due to it's location in the regex string this indicates we only want to match
 if the final word is here a non-"h" character followed by "ello".  Removing `\b` would allow `last word is too long violoncello` to match.
 
+### Only floating point numbers
+**Objective**: match all floating point numbers without matching integers
+```
+120
+123.45 (match)
+123,000.45 (match)
+123,000
+```
+- regex: `[0-9,]+\.[0-9]+`
+    - This pattern works for the given example but will also match something like `,,,,.12`
+- alternative: `([0-9]{1,3},?)+\.[0-9]+`
+    - This pattern is robust but maybe a little bit more than we need for this specific example.
+    - notice we first start with a number class `[0-9]` and there can be one to three digits `{1,3}` before we get an optional comma `,?`.
+    - We have that whole pattern wrapped in a capture group so that we can confirm it happens one or more times before the period `(___)+\.`
+    - last the number should end with 1 or more digits `[0-9]+`
+- notes:  Both of these patterns are valid depending on your use-case.  If you just need something quick and dirty for a find-replace, then the first will take you a long way as long as you're aware of its limitations.  The alternative example is much more likely to be added to a long term project due to the increased specificity. Choosing the right tool for the job is important.
