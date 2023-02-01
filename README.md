@@ -172,8 +172,27 @@ Below is a list of web addresses, some with and without a www in front.  If we o
 |www.amazon.com|yes|
 |mongodb.com/|yes|
 |www.wizard.gov/|no|
+
 ## Day 2
 ### Anchors
+Sometimes finding particular word matches can be tricky in larger paragraphs simply because of how certain words are constructed.  Consider the words `cat`, `caterpillar` and `concatinate`.  The letter sequence 'cat' can be found in all three of these examples, which means any regex matching 'cat' will also match the partial strings as well.  In order to circumvent this problem, RegEx has several anchors that will help to identify which pattern should match and which should be ignored.
+
+There are several anchors, most of them are similar to each other with subtle nuance between them.  The table below has a list of the three most commonly used ones.
+
+|Anchor|Example|Meaning|
+|:--|:--|:--|
+|`^`|`^Visit`| `^` looks for the beginning of the string and will only match `Visit` if it's at the start of the string |
+|`$`|`it\.$`|`$` looks for the end of a string, and will only match `it.` if it's at the end of the string|
+|`\b`|`\bcat\b`|`\b` checks for a surrounding word boundary, so will only match the word cat|
+
+It should also be noted to be careful with the placement of these as it can make it impossible for RegEx to find a match.
+
+|Broken Regex|Reason It Won't Match|
+|:--|:--|
+|`Is this real^`|It's impossible to have any characters before the start of a string|
+|`$fun`|It's impossible to have a character after the end of a string|
+|`bana(\b)na`|The word boundary is in the middle of the word, so there's no way for there to be a boundary here|
+
 ### Advanced Groups
 #### a. Capturing Groups
 #### b. Non-Capturing Groups

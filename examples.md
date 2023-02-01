@@ -73,16 +73,16 @@ EXCEPT the ones included in the brackets. Also note the presence of the `\b` her
 if the final word is here a non-"h" character followed by "ello".  Removing `\b` would allow `last word is too long violoncello` to match.
 
 ### Only floating point numbers
-**Objective**: match all floating point numbers without matching integers
+**Objective**: match all money
 ```
 120
-123.45 (match)
-123,000.45 (match)
-123,000
+$123.45 (match)
+$123,000.45 (match)
+123,000.5779
 ```
 - regex: `[0-9,]+\.[0-9]+`
     - This pattern works for the given example but will also match something like `,,,,.12`
-- alternative: `([0-9]{1,3},?)+\.[0-9]+`
+- alternative: `\$([0-9]{1,3},?)+\.[0-9]{2}`
     - This pattern is robust but maybe a little bit more than we need for this specific example.
     - notice we first start with a number class `[0-9]` and there can be one to three digits `{1,3}` before we get an optional comma `,?`.
     - We have that whole pattern wrapped in a capture group so that we can confirm it happens one or more times before the period `(___)+\.`
