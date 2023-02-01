@@ -88,3 +88,16 @@ $123,000.45 (match)
     - We have that whole pattern wrapped in a capture group so that we can confirm it happens one or more times before the period `(___)+\.`
     - last the number should end with 1 or more digits `[0-9]+`
 - notes:  Both of these patterns are valid depending on your use-case.  If you just need something quick and dirty for a find-replace, then the first will take you a long way as long as you're aware of its limitations.  The alternative example is much more likely to be added to a long term project due to the increased specificity. Choosing the right tool for the job is important.
+
+### Find and replace domain names
+```
+https://localhost:5500/api/agent/
+https://localhost:5500/api/alias/
+http://localhost:5500/api/agency/1/agent
+```
+- regex: `(https?:\/\/)[a-z]+:?\d*(\/.*$)`
+    - first capture group `(https?:\/\/)` the "s" is optional (`s?`) and the slashes have to be escaped `\/\/`
+    - domain name `[a-z]+:?\d*` one or more lowercase letters followed by an optional colon and port number
+    - second capture group `(\/.*$)` a slash followed by anything until the end of the line
+- replace:  `$1mydomain.com$2`
+    - notice because we reference the first and second capture groups in our replace, we can just replace the domain name.
