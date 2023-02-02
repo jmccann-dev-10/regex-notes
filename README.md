@@ -189,12 +189,61 @@ It should also be noted to be careful with the placement of these as it can make
 
 |Broken Regex|Reason It Won't Match|
 |:--|:--|
-|`Is this real^`|It's impossible to have any characters before the start of a string|
-|`$fun`|It's impossible to have a character after the end of a string|
-|`bana(\b)na`|The word boundary is in the middle of the word, so there's no way for there to be a boundary here|
+|`impossible^`|It's impossible to have any characters before the start of a string|
+|`$impossible`|It's impossible to have a character after the end of a string|
+|`impos(\b)sible`|The word boundary is in the middle of the word, so there's no way for there to be a boundary here|
 
 ### Advanced Groups
+As discussed before, groups can be used to treate a sequence of characters like a single group, which allows us to add flexibility to the entire patter.  However, there's a lot more to groups than previous talked about.
+
+> One thing I'd like to briefly mention here as an aside.  A couple of years ago, I was using the program [SED](https://linux.die.net/man/1/sed) to automate the modification of a config file and found my RegEx pattern wasn't working, even though I tested it out in RegEx101. This left me really confused<br><br>
+When I was trying to figure out why, I found out SED's RegEx support didn't have certain features built into it that are otherwise widly supported. I also found out there were a lot more variations on RegEx engines than I had originally thought as well.<br><br>
+I was able to fix the problem, but I also learned to check the language support when something unexpected happened.  Most of the things I've writtin in this document are either universally supported or have pretty good support across most flavors of RegEx so you can be confident of anything here probably will work 99% of the time.  The next couple of parts on groups are still widly adopted in most flavors of RegEx, but the amount of coverage is not as complete.
+
 #### a. Capturing Groups
+As mentioned before, putting paranthesis around a pattern makes it a group.  What wasn't mentioned before is this automatically gets captured into memory to be referenced later, either in the same pattern or durring replacements (something that hasn't been discussed yet).
+
+Most RegEx engines will assign numeric IDs to the capture groups starting at 1 and going up to 9.  When referencing them inside of the same pattern, the ID should be escaped (`\1`). When referencing the number in a replacement string, the capture group is signaled with a dollar sign (`$1`).  When dealing with nested groups, the ID numbering order is the same as paranthesis resolution in math: outward to in, and left to right.  While not widely supported, some engines will also support IDs up to 100.
+
+---
+___EX: [^Parse] HTML Tags___
+
+__Here is some \<span>HTML!\</span> to show how multiple tags \<i>can\</i> cause problems__
+
+Looking at the above example, if we wanted to get the words surrounded by html tags there's a few pretty obvious patterns we can latch onto:
+
+1. Opening tags are written lower case letters and surrounded by opening and closing brackets (`<TAG>`).  A good pattern might be to target the opening and closing angle brackets and target 1 or more lower case characters in a row:  `<[a-z]+>`
+
+2. There's a closing tag that follows the same pattern, but has a forward slash before the tag name (`</TAG>`).  Seems like the same pattern would work, but we'll just add a forward slash to the same pattern and place it at the end: `<\/[a-z]+>`
+
+3. All that leaves is everything in between.  Since the content between can be anything, we'll just use `.*` to capture everything.
+
+final: `<[a-z]+>.*<\/[a-z]+>`
+
+Alright!  And that leaves us with:
+
+__\<span>HTML!\</span> to show how multiple tags \<i>can\</i>__
+
+Shoot!  Okay, I looked on stack overflow and found [this post](https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags) the explained the problem is I tired to use RegEx to parse something too complex, so this is really the wrong tool for the wrong job.  We've already come this far though, and another response on the same post mentioned it's possible for _limited known sets_ to be parsed appropriately.  Since that's what I've got in the example above, I'm going to change the exercise name from `Parse HTML tags` to `[^Parse] HTML tags` and carry on.
+
+The _real_ problem with this solution is there are two tags in the same line on this example, and RegEx greadily matched everything from the first opening tag to the last opening tag.
+
+There's a handful of ways we can fix this with the previous tools we've already learned so far, but since we're using capturing groups, let's do that.
+
+1. We'll start by modifying the first tag pattern by enclosing the part coresponding to the name into a capture group.  That simply means we'll change `<[a-z]+>` to `<([a-z]+)>`.
+
+2. Now we can modify the closing tag by referencing the capture group in place of the pattern for the tag name to ensure the opening and closing tag have the same name.  This means we'll change `<\/[a-z]+>` to `<\/\1>`
+
+real final: `<([a-z]+)>.*<\/\1>`
+
 #### b. Non-Capturing Groups
+Since we have limited IDs that can be assigned inside of any given RegEx, if a pattern gets overly complex and we need to be picky with the ID system, or just don't need or want an ID there's a particular syntax we can use to tell RegEx group but not capture.  This can be done by placing the characters `?:` at the beginning of a group, after the first paranthesis: `(?:...)`.  This doesn't have any impact on matching patterns, but keeps the memory clean of any of any groups found.
+
+Returning to the web address example above, we used a group to help capture URLs that both did and didn't have a preceeding `www.`.  Since this isn't the important part of the web address, we could easily modify the same pattern to also not remember that group so we can more easily capture that part of the address that does matter:
+
+`(?:w{3}\.)?([\w-]+).com`
+
+With that slight change to the same pattern, it means the first reference will give us the `regex101` in `regex101.com` and the `bestbuy` in `www.bestbuy.com`.
+
 #### c. Assertions
 ### Flags
