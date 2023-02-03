@@ -101,3 +101,36 @@ http://localhost:5500/api/agency/1/agent
     - second capture group `(\/.*$)` a slash followed by anything until the end of the line
 - replace:  `$1mydomain.com$2`
     - notice because we reference the first and second capture groups in our replace, we can just replace the domain name.
+
+### Match quoted words
+**Objective** Match the words within the quotations but not the quotations themselves.
+```
+"this"
+"not this"
+"'no'" (should not match)
+"""this""" (should only match the letters not the inner quotation marks)
+```
+
+- Incorrect regex: `"([a-zA-Z]+)"`  While this matches a single word in quotations it also matches the quotations themselves.
+- Correct regex: `(?<=")([a-zA-Z]+)(?=")`
+    - Now instead of including the quotes in the match we are asserting their location.
+    - We use look behind `(?<=")` to assert that a single quote precedes our match.
+    - We use look ahead `(?=")` to assert that a single quote comes after our match.
+
+### Southern name change
+***A disgruntled journalist wrote a story including many fake double names using "Bob". From a brief reading, we notice that we need to correct "Billy Bob", "Jim Bob", and "Joe Bob".  To complicate things, there is someone named "Bob" so we don't want to match that name when it appears by itself.  The example sentence should only match the last three instances of "Bob"***
+```
+Uncle Bob doesn't like Jim Bob, Joe Bob, or Billy Bob.
+```
+- Starter regex:  `\sBob` will match all four.
+- Only after "Jim": `(?<Jim)\sBob` 
+- After "Jim" or "Joe": `(?<=J(oe|im))\sBob` or `(?<=J\w{2})\sBob`
+- Only after "Billy": `(?<=Billy)\sBob` or `(?<=B\w{4})`
+- Finalized regex combination: `((?<=J(oe|im))|(?<=Billy))\sBob`80 steps
+- Alternative: `((?<=J\w{2})|(?<=B\w{4}))\sBob` 70 steps
+- Engine Alternative:  `(?<=(?<!^)[A-Z]\w+)\sBob` **CAUTION** This pattern has some issues...
+    - This statement only works in engines that support non-fixed width assertions (does not include Java unfortunately)
+    - The key problem here is `\w+`since it will make the assertion of a variable length.
+    - This statement includes a nested assertion `(?<!^)` (i.e. NOT preceded by the start of the line).  To exclude "Uncle" since the first letter of a sentence will be capitalized.
+    - The outer assertion then is meant to catch any capitalized word NOT at the start of a sentence `(?<=(?<!^)[A-Z]\w+)`
+    - Attentive readers will probably notice that this would NOT match "Billy Bob" (or any of our other targets) if it starts a sentence...which is a problem.  This just goes to show the pitfalls of trying to be too broad/flexible with a pattern.
