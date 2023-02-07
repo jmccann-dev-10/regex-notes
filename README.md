@@ -27,6 +27,7 @@ Several characters perform special functions in Regex by default. A few examples
 |`.`|Works as a wild card, will find any character in a string except for new line characters|
 |`\|`|Works as an `or` in patterns and will match either everything to the left or everything to the right of the pipe.
 |`\`|Used to escape meta characters|
+|`(` and `)`|Used for grouping character sequences, works the same as paranthesis in math|
 
 This list is far from exhaustive.  There are plenty of others, and we'll build our volcabulary as we go.
 
@@ -36,9 +37,10 @@ Character classes are made using the square brackets with a number of characters
 
 |Example|Equivilent|Notes|
 |:--|:--|:--|
-|`[aF5]` | `a|F|5`| these characters are between the brackets and it can match any of them once
-|`[fc]ar`| `far|car` | either an `f` or `c` can be matched, as long as they are followed by the letters `ar`.  The class can only be matched once in this case as well, so `fcar` would not match, nor would `cfar`
+|`[aF5]` | `a\|F\|5`| these characters are between the brackets and it can match any of them once
+|`[fc]ar`| `far\|car` | either an `f` or `c` can be matched, as long as they are followed by the letters `ar`.  The class can only be matched once in this case as well, so `fcar` would not match, nor would `cfar`
 
+---
 ___EX: Finding Cat in the Hat___
 
 __“Now! Now! Have no fear. Have no fear!” said the cat. “My tricks are not bad,” said the Cat in the Hat.__
@@ -46,6 +48,8 @@ __“Now! Now! Have no fear. Have no fear!” said the cat. “My tricks are not
 If we wanted to find all instances of the word `cat` and `hat` in the above excerpt from the Cat in the Hat, we could use the following regex: `[CHc]at`
 
 Both the capital and lowercase `C` need to be included.
+
+---
 #### b. Ranges
 Character classes also support ranges of characters as well.  The syntax for ranges are specified as the lower character to start from, a hyphen, and then the character to end.  More than one range can be used in the same character class, and the ranges are inclusive to both the lower and upper bounds of the range.  As an example, `[d-f]` will match the characters `d`, `e`, and `f`.
 
@@ -68,6 +72,7 @@ These can be used in place of the squre brackets but lack the flexibility of spe
 
 These can also be combined with other characters inside of a character class to expand them further
 
+---
 ___EX: Finding negative and positive numbers___
 
 __12<br>
@@ -80,6 +85,7 @@ __12<br>
 
 For the above example, we can use `\d` to select any single digit character.  If we place a hyphen infront of it (`-\d`), we might asssume this would help us find the negative numbers as well, but only the `-1` and `-2` light up.  If we wrap character combination into square brackets (`[-\d]`), expanding the shorthand inside of the character class, then all of the numbers and hyphens light up in this case.  At this point we're still only grabbing single characters in our patterns, but we'll address that in the section on quantifiers.
 
+---
 #### d. Negations
 Character classes and the shorthands all have negations built into Regex, which is really just a fancy way of saying "do the opposite".  For character classes, placing a carrot (`^`) at the beginning of the character class will tell Regex to match any character not included.  One note is the carrot needs to be at the beginning of the character class, otherwise Regex will match a literal carrot inside of the string instead.
 
@@ -135,6 +141,7 @@ We now have enough Regex to match all of the phone numbers above.  It could be r
 
 Final result: `5{3}[-.]{0,1}\d{4}`
 
+---
 #### b. Shorthand
 There are three shorthand quantifiers that can be used.  These are extermely common and can be used instead of specific lengths, but are not easily modified.
 
@@ -159,9 +166,10 @@ Take into consideration the following string:
 |`*?`|`[a-z]*?`|Match zero or more times, as few times as possible| 
 
 ### 4. Groups
-Groups can be used to treat sequences of characters as a single unit. This can be achieved by placing paranthesis around a particular pattern. These groups can then have additional quantifiers used on them.
+Groups can be used to treat sequences of characters as a single unit. This can be achieved by placing parenthesis around a particular pattern. These groups can then have additional quantifiers used on them.
 
-EX: Web Addresses:
+---
+___EX: Web Addresses___
 Below is a list of web addresses, some with and without a www in front.  If we only wanted to match `.com` addresses we could use the following regex to accomplish this  The `(w{3}\.)?` would make the `www.` an optional group to match both cases:
 `(w{3}\.)?[\w-]+.com`
 
@@ -173,6 +181,7 @@ Below is a list of web addresses, some with and without a www in front.  If we o
 |mongodb.com/|yes|
 |www.wizard.gov/|no|
 
+---
 ### Anchors
 Sometimes finding particular word matches can be tricky in larger paragraphs simply because of how certain words are constructed.  Consider the words `cat`, `caterpillar` and `concatinate`.  The letter sequence 'cat' can be found in all three of these examples, which means any regex matching 'cat' will also match the partial strings as well.  In order to circumvent this problem, Regex has several anchors that will help to identify which pattern should match and which should be ignored.
 
@@ -200,9 +209,9 @@ When I was trying to figure out why, I found out SED's Regex support didn't have
 I was able to fix the problem, but I also learned to check the language support when something unexpected happened.  Most of the things I've writtin in this document are either universally supported or have pretty good support across most flavors of Regex so you can be confident of anything here probably will work 99% of the time.  The next couple of parts on groups are still widly adopted in most flavors of Regex, but the amount of coverage is not as complete.
 
 #### a. Capturing Groups
-As mentioned before, putting paranthesis around a pattern makes it a group.  What wasn't mentioned before is this automatically gets captured into memory to be referenced later, either in the same pattern or durring replacements (something that hasn't been discussed yet).
+As mentioned before, putting parenthesis around a pattern makes it a group.  What wasn't mentioned before is this automatically gets captured into memory to be referenced later, either in the same pattern or durring replacements (something that hasn't been discussed yet).
 
-Most Regex engines will assign numeric IDs to the capture groups starting at 1 and going up to 9.  When referencing them inside of the same pattern, the ID should be escaped (`\1`). When referencing the number in a replacement string, the capture group is signaled with a dollar sign (`$1`).  When dealing with nested groups, the ID numbering order is the same as paranthesis resolution in math: outward to in, and left to right.  While not widely supported, some engines will also support IDs up to 100.
+Most Regex engines will assign numeric IDs to the capture groups starting at 1 and going up to 9.  When referencing them inside of the same pattern, the ID should be escaped (`\1`). When referencing the number in a replacement string, the capture group is signaled with a dollar sign (`$1`).  When dealing with nested groups, the ID numbering order is the same as parenthesis resolution in math: outward to in, and left to right.  While not widely supported, some engines will also support IDs up to 100.
 
 ---
 ___EX: [^Parse] HTML Tags___
@@ -235,8 +244,9 @@ There's a handful of ways we can fix this with the previous tools we've already 
 
 real final: `<([a-z]+)>.*<\/\1>`
 
+---
 #### b. Non-Capturing Groups
-Since we have limited IDs that can be assigned inside of any given Regex, if a pattern gets overly complex and we need to be picky with the ID system, or just don't need or want an ID there's a particular syntax we can use to tell Regex group but not capture.  This can be done by placing the characters `?:` at the beginning of a group, after the first paranthesis: `(?:...)`.  This doesn't have any impact on matching patterns, but keeps the memory clean of any groups found.
+Since we have limited IDs that can be assigned inside of any given Regex, if a pattern gets overly complex and we need to be picky with the ID system, or just don't need or want an ID there's a particular syntax we can use to tell Regex group but not capture.  This can be done by placing the characters `?:` at the beginning of a group, after the first parenthesis: `(?:...)`.  This doesn't have any impact on matching patterns, but keeps the memory clean of any groups found.
 
 Returning to the web address example above, we used a group to help capture URLs that both did and didn't have a preceeding `www.`.  Since this isn't the important part of the web address, we could easily modify the same pattern to also not remember that group and much more easily capture that part of the address that does matter:
 
@@ -245,7 +255,7 @@ Returning to the web address example above, we used a group to help capture URLs
 With that slight change to the same pattern, it means the first reference will give us the `regex101` in `regex101.com` and the `bestbuy` in `www.bestbuy.com`.
 
 #### c. Assertions
-Assertions are similar to anchors where we can target specific patterns while also targeting surround information.  All four assertions are a type of group (so they're surrounded by paranthesis), contain their own pattern, and (similar to the non-capturing group) have a particular syntax to explain to Regex how to interpret the group.  What's special about assertions is they can be used to target a particular surrounding pattern, while not lumping the assertion into the same group.  These are great for interpeting serial numbers with important metadata built in, or finding an occurrance inside of a string where there's some other obvious marker that would clue into the correct one to find.  The four groups are:
+Assertions are similar to anchors where we can target specific patterns while also targeting surround information.  All four assertions are a type of group (so they're surrounded by parenthesis), contain their own pattern, and (similar to the non-capturing group) have a particular syntax to explain to Regex how to interpret the group.  What's special about assertions is they can be used to target a particular surrounding pattern, while not lumping the assertion into the same group.  These are great for interpeting serial numbers with important metadata built in, or finding an occurrance inside of a string where there's some other obvious marker that would clue into the correct one to find.  The four groups are:
 
 |Syntax|Name|Meaning|
 |:--|:--|:--|
@@ -309,6 +319,7 @@ The last subject we should briefly visit are the flags.  These all come after th
 
 This list is far from exhaustive, but these are the more common ones available.
 
+---
 ### Fantastic Resources
 * [Regex101](https://regex101.com/) - This is one of my favorite tools.  I use this one a lot when I'm experimenting with complex problems or trying to debug a pattern with unexpected results.  The quick reference is great when I'm looking for syntax I can't remember
 * [Regular-Expressions.info](https://www.regular-expressions.info/quickstart.html) - Great tutorial site with several thorough examples and explanations.  There's some awesome examples in the common pitfalls section I somehow managed to avoid most of my career until I didn't.  The explanation here helped me figure out how to refactor the solution.

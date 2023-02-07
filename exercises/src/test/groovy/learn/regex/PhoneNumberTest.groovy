@@ -17,24 +17,24 @@ class PhoneNumberTest {
     }
 
     @Test
-    void findNumbersWithParenthesis() {
+    void findPhoneNumbersWithParenthesis() {
         String regex = /REGEX HERE/
-        List<String> areaCodeWithParenthesis = regexTester.findAll(regex)
+        List<String> phoneNumbersWithParenthesis = regexTester.findAll(regex)
 
-        assertEquals(19, areaCodeWithParenthesis.size())
+        assertEquals(19, phoneNumbersWithParenthesis.size())
     }
 
     @Test
-    void findNumbersWithoutParenthesis() {
+    void findPhoneNumbersWithoutParenthesis() {
         String regex = /REGEX HERE/
-        List<String> areaCodeWithoutParenthesis = regexTester.findAll(regex)
+        List<String> phoneNumbersWithoutParenthesis = regexTester.findAll(regex)
 
-        assertEquals(79, areaCodeWithoutParenthesis.size())
+        assertEquals(79, phoneNumbersWithoutParenthesis.size())
     }
 
     /* HINT: You may find this link useful - https://www.allareacodes.com/area-code-map.htm */
     @Test
-    void findNumbersFromGreaterMilwaukeeArea() {
+    void findPhoneNumbersFromGreaterMilwaukeeArea() {
         String regex = /REGEX HERE/
         List<String> southEastWisconsinNumbers = regexTester.findAll(regex)
 
@@ -42,7 +42,7 @@ class PhoneNumberTest {
     }
 
     @Test
-    void findNumbersFromTwinCitiesArea() {
+    void findPhoneNumbersFromTwinCitiesArea() {
         String regex = /REGEX HERE/
         List<String> twinCitiesNumbers = regexTester.findAll(regex)
 
@@ -50,7 +50,7 @@ class PhoneNumberTest {
     }
 
     @Test
-    void findWellFormedNumbers_CHALLENGE() {
+    void findWellFormedPhoneNumbers_CHALLENGE() {
         String regex = /REGEX HERE/
         List<String> wellFormedNumbers = regexTester.findAll(regex)
 
