@@ -34,7 +34,7 @@ class PhoneNumberTest {
 
     /* HINT: You may find this link useful - https://www.allareacodes.com/area-code-map.htm */
     @Test
-    void findPhoneNumbersFromGreaterMilwaukeeArea() {
+    void findPhoneNumbersFromSouthEasternWisconsin() {
         String regex = /REGEX HERE/
         List<String> southEastWisconsinNumbers = regexTester.findAll(regex)
 

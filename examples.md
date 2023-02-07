@@ -18,9 +18,9 @@ INTERLUDE - quick overview of meta characters
 - notes: Character classes are created by using square brackets and including a number of options.  Think of this like the `.` character but with a limited number of options we can define.
 
 ### Character classes continued
-- regex: `[jhm]ello`
-- matches 3 times: `hello jello mello`
-- does not match: `Hello Jello Mello`
+- regex: `[HMj]ello`
+- matches 3 times: `Hello, Mr. Mello, would you like some to eat some jello while you play your cello?`
+- does not match: `hello mello cello`
 - notes: Notice that all of the characters in the character class are still case sensitive so the capitalized versions do not match.
 
 ### Character classes with ranges
@@ -127,7 +127,8 @@ Uncle Bob doesn't like Jim Bob, Joe Bob, or Billy Bob.
 - After "Jim" or "Joe": `(?<=J(oe|im))\sBob` or `(?<=J\w{2})\sBob`
 - Only after "Billy": `(?<=Billy)\sBob` or `(?<=B\w{4})`
 - Finalized regex combination: `((?<=J(oe|im))|(?<=Billy))\sBob`80 steps
-- Alternative: `((?<=J\w{2})|(?<=B\w{4}))\sBob` 70 steps
+- Alternative: `ll
+` 70 steps
 - Engine Alternative:  `(?<=(?<!^)[A-Z]\w+)\sBob` **CAUTION** This pattern has some issues...
     - This statement only works in engines that support non-fixed width assertions (does not include Java unfortunately)
     - The key problem here is `\w+`since it will make the assertion of a variable length.
