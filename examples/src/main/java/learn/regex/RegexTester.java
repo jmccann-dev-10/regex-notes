@@ -1,4 +1,4 @@
-package org.example.regexexamples;
+package learn.regex;
 
 import javax.imageio.IIOException;
 import java.io.BufferedReader;

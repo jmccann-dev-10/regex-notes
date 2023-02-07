@@ -1,4 +1,4 @@
-package org.example.regexexamples
+package learn.regex
 
 import groovy.transform.CompileStatic
 import org.junit.jupiter.api.BeforeAll
