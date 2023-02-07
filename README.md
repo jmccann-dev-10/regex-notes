@@ -2,16 +2,16 @@
 ### 1. Basic Syntax
 Regex is an extremely powerful tool for matching strings found in applications.  Almost all languages have support for Regex, although they often use different engines when interpreting the Regex patterns.
 
-Most The most common delimiter used is the `/`, followed by any additional flags to fine tune the pattern matching.  Many examples found on the internet will use this delimiter to indicate a regex pattern.  This is not the only delimiter that can be used, but it is the most common.  For the sake of discussion, I'm going to leave the delimiter off of most examples.  Unless otherwise specified, it should be implied all of the examples are bookended with `/` and `/g`.
+Most The most common delimiter used is the `/`, followed by any additional flags to fine tune the pattern matching.  Many examples found on the internet will use this delimiter to indicate a regex pattern.  This is not the only delimiter that can be used, but it is the most common.  For the sake of discussion, I'm going to leave the delimiter off of most examples.  Unless otherwise specified, it should be implied all the examples are bookended with `/` and `/g`.
 
 The `g` flag, tells Regex to match as many times as it can possible.
 
-|Example|Implied delimeter|
+|Example|Implied Format|
 |:---|:---|
 |`find me`|`/find me/g`|
 |`[a-z]`|`/[a-z]/g`|
 #### a. Literal Character Matching
-Any character specified inside of the regex can be found by just typing it in.  If you've ever used the find feature on any text editor before, this works about the same.  This is literal string matching inside of Regex, and any combination of letters can be used.  Using the letter `a` will find any occurance of the letter `a`, even if it's found inside of another word like "c**a**n" or "b**a**n**a**n**a**".  Any further combination of letters will search for that exact match as well.  Case sensitivity is on by default in Regex.
+Any character specified inside of the regex can be found by just typing it in.  If you've ever used the find feature on any text editor before, this works about the same.  This is literal string matching inside of Regex, and any combination of letters can be used.  Using the letter `a` will find any occurrence of the letter `a`, even if it's found inside of another word like "c**a**n" or "b**a**n**a**n**a**".  Any further combination of letters will search for that exact match as well.  Case sensitivity is on by default in Regex.
 
 |Example|Highlight|Notes|
 |:--|:--|:--|
@@ -27,15 +27,15 @@ Several characters perform special functions in Regex by default. A few examples
 |`.`|Works as a wild card, will find any character in a string except for new line characters|
 |`\|`|Works as an `or` in patterns and will match either everything to the left or everything to the right of the pipe.
 |`\`|Used to escape meta characters|
-|`(` and `)`|Used for grouping character sequences, works the same as paranthesis in math|
+|`(` and `)`|Used for grouping character sequences, works the same as parenthesis in math|
 
-This list is far from exhaustive.  There are plenty of others, and we'll build our volcabulary as we go.
+This list is far from exhaustive.  There are plenty of others, and we'll build our vocabulary as we go.
 
 ### 2. Classes
 #### a. Match Specified Characters
-Character classes are made using the square brackets with a number of characters included inbetween.  They function very similarly to the pipe, where it will match one character from any of the ones listed in the square brackets.
+Character classes are made using the square brackets with a number of characters included in-between.  They function very similarly to the pipe, where it will match one character from any of the ones listed in the square brackets.
 
-|Example|Equivilent|Notes|
+|Example|Equivalent|Notes|
 |:--|:--|:--|
 |`[aF5]` | `a\|F\|5`| these characters are between the brackets and it can match any of them once
 |`[fc]ar`| `far\|car` | either an `f` or `c` can be matched, as long as they are followed by the letters `ar`.  The class can only be matched once in this case as well, so `fcar` would not match, nor would `cfar`
@@ -61,10 +61,10 @@ Character classes also support ranges of characters as well.  The syntax for ran
 |`[z-a]`|nothing|the range has to start from a smaller character code to a larger, since `z` is 122, there are no characters codes both larger than 122 and smaller than 97 at the same time.
 
 #### c. Shorthand
-There are serveral shorthand tokens supported in Regex for common character classes
-These can be used in place of the squre brackets but lack the flexibility of specifying your own.  If all of the characters can be captured, they can easily be used by themselves, but if there is a character that shouldn't be added then it's better to make your own character class.  Each of these are represented by a backslash and a lowercase alphabet character:
+There are several shorthand tokens supported in Regex for common character classes
+These can be used in place of the square brackets but lack the flexibility of specifying your own.  If all the characters can be captured, they can easily be used by themselves, but if there is a character that shouldn't be added then it's better to make your own character class.  Each of these are represented by a backslash and a lowercase alphabet character:
 
-|Shorthand|Equivilent Character Class|Notes
+|Shorthand|Equivalent Character Class|Notes
 |:--|:--|:--|
 |`\d`|`[0-9]`|Any ***D***igit|
 |`\w`|`[A-Za-z0-9_]`|Any ***W***ord character (letter, digit, or underscore)|
@@ -83,11 +83,11 @@ __12<br>
 456<br>
 25__
 
-For the above example, we can use `\d` to select any single digit character.  If we place a hyphen infront of it (`-\d`), we might asssume this would help us find the negative numbers as well, but only the `-1` and `-2` light up.  If we wrap character combination into square brackets (`[-\d]`), expanding the shorthand inside of the character class, then all of the numbers and hyphens light up in this case.  At this point we're still only grabbing single characters in our patterns, but we'll address that in the section on quantifiers.
+For the above example, we can use `\d` to select any single digit character.  If we place a hyphen in front of it (`-\d`), we might assume this would help us find the negative numbers as well, but only the `-1` and `-2` light up.  If we wrap character combination into square brackets (`[-\d]`), expanding the shorthand inside of the character class, then all the numbers and hyphens light up in this case.  At this point we're still only grabbing single characters in our patterns, and we'll address that in the section on quantifiers.
 
 ---
 #### d. Negations
-Character classes and the shorthands all have negations built into Regex, which is really just a fancy way of saying "do the opposite".  For character classes, placing a carrot (`^`) at the beginning of the character class will tell Regex to match any character not included.  One note is the carrot needs to be at the beginning of the character class, otherwise Regex will match a literal carrot inside of the string instead.
+Character classes and the shorthand all have negations built into Regex, which is really just a fancy way of saying "do the opposite".  For character classes, placing a carrot (`^`) at the beginning of the character class will tell Regex to match any character not included.  One note is the carrot needs to be at the beginning of the character class, otherwise Regex will match a literal carrot inside of the string instead.
 
 |Example|Meaning|
 |:--|:--|
@@ -96,21 +96,21 @@ Character classes and the shorthands all have negations built into Regex, which 
 |`[^dg1]`|Match any character as long as it's not a `d`, `g`, or `1`|
 |`[^a-z]`|Match any character as long as it's not a lower case character|
 
-The shorthand tokens above also have negations as well, they are represented with a backslash and uppercase character to do the exact opposite of the lowercase couterpart.
+The shorthand tokens above also have negations as well, they are represented with a backslash and uppercase character to do the exact opposite of the lowercase counterpart.
 
-|Shorthand|Equivilent Character Class|Notes
+|Shorthand|Equivalent Character Class|Notes
 |:--|:--|:--|
 |`\D`|`[^0-9]`|Match anything not a digit|
 |`\W`|`[^A-Za-z0-9_]`|Match anything not a word character (letter, digit, or underscore)|
 |`\S`|`[^\t\r\n ]`|Match anything not a whitespace character (tab, new line, carriage return, or Space)|
 
 ### 3. Quantifiers
-So far we've seen how to match characters, combinations, and patterns, but sometimes we need to group a pattern multiple times or use a combination.  Take the example for finding numbers above.  We were able to write Regex to match the individual numbers `4` and `6` and `5`, but what if we wanted to match `456`?  This is where quantifiers come in handy, and allow us to pattern match multiple times within the same group.
+So far we've seen how to match characters, combinations, and patterns, but sometimes we need to group a pattern multiple times or use a combination.  Take the example for finding numbers above.  We were able to write Regex to match the individual numbers `4` and `6` and `5`, but what if we wanted to match `456`?  This is where quantifiers come in handy and allow us to pattern match multiple times within the same group.
 
 #### a. Specific
 If we know how many times a pattern should match in a given string, we can use the syntax of a single number between two curly braces (`{num}`) immediately following a pattern to tell Regex to match the pattern exactly as many times as specified between the curly braces. As an example, using the Regex `\d{3}` will now match any three digit number, but ignore number combinations less than or more than 3 digits in length.
 
-Most of the time we don't really know the exact length, so fortuantely the quanitifier syntax also supports both a minimum length (by placing a comma after the number), and min/max length (by placing an additional number after the comma).
+Most of the time we don't really know the exact length, so fortunately the quantifier syntax also supports both a minimum length (by placing a comma after the number), and min/max length (by placing an additional number after the comma).
 
 |Pattern|Match|Ignore|Meaning|
 |:--|:--|:--|:--|
@@ -126,24 +126,24 @@ __555-9564<br>
 555-2763<br>
 5557990__
 
-We now have enough Regex to match all of the phone numbers above.  It could be really easy to just crate a character class to match any of the character and try to match the length (`[\d.-]{7,8}`) but this would allow some unwanted combinations to go through as well:
-|Unwatned Match|Reason for Matching|
+We now have enough Regex to match all the phone numbers above.  It could be really easy to just crate a character class to match any of the character and try to match the length (`[\d.-]{7,8}`) but this would allow some unwanted combinations to go through as well:
+|Unwanted Match|Reason for Matching|
 |:--|:--|
 |`55579847`|eight digits|
-|`3-768490`|hypen is in the wrong place|
+|`3-768490`|hyphen is in the wrong place|
 |`5559284.`|punctuation at the end of a sentence|
 
-1. Some of the examples are punctuated with either a hypen or period, we can use a character class to target either of those `[-.]`.  Because one example doesn't have this, we'll also need to specify a min/max range on this as well to match one or zero times `[-.]{0,1}`
+1. Some of the examples are punctuated with either a hyphen or period, we can use a character class to target either of those `[-.]`.  Because one example doesn't have this, we'll also need to specify a min/max range on this as well to match one or zero times `[-.]{0,1}`
 
-2. The last four digits can be any random combination, so we can use the shorthand `\d` for any number, and place `{4}` immediately after to target four digit combinations
+2. The last four digits can be any random combination, so we can use the shorthand `\d` for any number, and place `{4}` immediately after to target four-digit combinations
 
-3. This leaves the only thing we need to target now is the first three digits.  If we were using real phone numbers, these first three digits could be just about any combination of digits so it might make sense to make a pattern similar to the previous step (`\d{3}`).  Since all of the phone numbers are fake in the above examples, it would be better to be more specific than less specific, so we'll use `5{3}` instead.
+3. This leaves the only thing we need to target now is the first three digits.  If we were using real phone numbers, these first three digits could be just about any combination of digits so it might make sense to make a pattern similar to the previous step (`\d{3}`).  Since all the phone numbers are fake in the above examples, it would be better to be more specific than less specific, so we'll use `5{3}` instead.
 
 Final result: `5{3}[-.]{0,1}\d{4}`
 
 ---
 #### b. Shorthand
-There are three shorthand quantifiers that can be used.  These are extermely common and can be used instead of specific lengths, but are not easily modified.
+There are three shorthand quantifiers that can be used.  These are extremely common and can be used instead of specific lengths but are not easily modified.
 
 |Sh|Alt|Exp|Meaning|
 |:--|:--|:--|:--|
@@ -156,7 +156,7 @@ Take into consideration the following string:
 
  `This is some <span>html</span> if we have more than one match in the same <span>space</span> we can have some unusual results.`
 
- If we use the regex `<span>.*<.span>`, we might expect to get two hits above.  Because quantifiers are greedy by default, the `*` and `+` quantifiers will match as big of a hit as possible.  Since all of the characters in the opening and closing span tags can be matched with the wildcard character, this means the regex will match everything from the first occurrence  `<span>` tag to the last occurrence of the closing `</span>` tag as a single group.
+ If we use the regex `<span>.*<.span>`, we might expect to get two hits above.  Because quantifiers are greedy by default, the `*` and `+` quantifiers will match as big of a hit as possible.  Since all the characters in the opening and closing span tags can be matched with the wildcard character, this means the regex will match everything from the first occurrence  `<span>` tag to the last occurrence of the closing `</span>` tag as a single group.
 
  There is more than one way to fix this problem.  The most simple way is to be more specific with our pattern, but we can also alternatively make the greedy match lazy by adding a `?` after the `*`
 
@@ -183,14 +183,14 @@ Below is a list of web addresses, some with and without a www in front.  If we o
 
 ---
 ### Anchors
-Sometimes finding particular word matches can be tricky in larger paragraphs simply because of how certain words are constructed.  Consider the words `cat`, `caterpillar` and `concatinate`.  The letter sequence 'cat' can be found in all three of these examples, which means any regex matching 'cat' will also match the partial strings as well.  In order to circumvent this problem, Regex has several anchors that will help to identify which pattern should match and which should be ignored.
+Sometimes finding specific word matches can be tricky in larger paragraphs simply because of how certain words are constructed.  Consider the words `cat`, `caterpillar` and `concatenate`.  The letter sequence 'cat' can be found in all three of these examples, which means any regex matching 'cat' will also match the partial strings as well.  To circumvent this problem, Regex has several anchors that will help to identify which pattern should match and which should be ignored.
 
 There are several anchors, most of them are similar to each other with subtle nuance between them.  The table below has a list of the three most commonly used ones.
 
 |Anchor|Example|Meaning|
 |:--|:--|:--|
 |`^`|`^Visit`| `^` looks for the beginning of the string and will only match `Visit` if it's at the start of the string |
-|`$`|`it\.$`|`$` looks for the end of a string, and will only match `it.` if it's at the end of the string|
+|`$`|`it\.$`|`$` looks for the end of a string and will only match `it.` if it's at the end of the string|
 |`\b`|`\bcat\b`|`\b` checks for a surrounding word boundary, so will only match the word cat|
 
 It should also be noted to be careful with the placement of these as it can make it impossible for Regex to find a match.
@@ -202,27 +202,27 @@ It should also be noted to be careful with the placement of these as it can make
 |`impos(\b)sible`|The word boundary is in the middle of the word, so there's no way for there to be a boundary here|
 
 ### Advanced Groups
-As discussed before, groups can be used to treate a sequence of characters like a single group, which allows us to add flexibility to the entire patter.  However, there's a lot more to groups than previous talked about.
+As discussed before, groups can be used to treat a sequence of characters like a single group, which allows us to add flexibility to the entire patter.  However, there's a lot more to groups than previous talked about.
 
 > One thing I'd like to briefly mention here as an aside.  A couple of years ago, I was using the program [SED](https://linux.die.net/man/1/sed) to automate the modification of a config file and found my Regex pattern wasn't working, even though I tested it out in Regex101. This left me really confused<br><br>
-When I was trying to figure out why, I found out SED's Regex support didn't have certain features built into it that are otherwise widly supported. I also found out there were a lot more variations on Regex engines than I had originally thought as well.<br><br>
-I was able to fix the problem, but I also learned to check the language support when something unexpected happened.  Most of the things I've writtin in this document are either universally supported or have pretty good support across most flavors of Regex so you can be confident of anything here probably will work 99% of the time.  The next couple of parts on groups are still widly adopted in most flavors of Regex, but the amount of coverage is not as complete.
+When I was trying to figure out why, I found out SED's Regex support didn't have certain features built into it that are otherwise widely supported. I also found out there were a lot more variations on Regex engines than I had originally thought as well.<br><br>
+I was able to fix the problem, but I also learned to check the language support when something unexpected happened.  Most of the things I've written in this document are either universally supported or have pretty good support across most flavors of Regex so you can be confident of anything here probably will work 99% of the time.  The next couple of parts on groups are still widely adopted in most flavors of Regex, but the amount of coverage is not as complete.
 
 #### a. Capturing Groups
-As mentioned before, putting parenthesis around a pattern makes it a group.  What wasn't mentioned before is this automatically gets captured into memory to be referenced later, either in the same pattern or durring replacements (something that hasn't been discussed yet).
+As mentioned before, putting parenthesis around a pattern makes it a group.  What wasn't mentioned before is this automatically gets captured into memory to be referenced later, either in the same pattern or during replacements (something that hasn't been discussed yet).
 
-Most Regex engines will assign numeric IDs to the capture groups starting at 1 and going up to 9.  When referencing them inside of the same pattern, the ID should be escaped (`\1`). When referencing the number in a replacement string, the capture group is signaled with a dollar sign (`$1`).  When dealing with nested groups, the ID numbering order is the same as parenthesis resolution in math: outward to in, and left to right.  While not widely supported, some engines will also support IDs up to 100.
+Most Regex engines will assign numeric IDs to the capture groups starting at 1 and going up to 9.  When referencing them inside of the same pattern, the ID should be escaped (`\1`). When referencing the number in a replacement string, the capture group is signaled with a dollar sign (`$1`).  When dealing with nested groups, the ID numbering order is the same as parenthesis resolution in math: outward to in and left to right.  While not widely supported, some engines will also support IDs up to 100.
 
 ---
 ___EX: [^Parse] HTML Tags___
 
 __Here is some \<span>HTML!\</span> to show how multiple tags \<i>can\</i> cause problems__
 
-Looking at the above example, if we wanted to get the words surrounded by html tags there's a few pretty obvious patterns we can latch onto:
+Looking at the above example, if we wanted to get the words surrounded by html tags there's a few obvious patterns we can latch onto:
 
 1. Opening tags are written lower case letters and surrounded by opening and closing brackets (`<TAG>`).  A good pattern might be to target the opening and closing angle brackets and target 1 or more lower case characters in a row:  `<[a-z]+>`
 
-2. There's a closing tag that follows the same pattern, but has a forward slash before the tag name (`</TAG>`).  Seems like the same pattern would work, but we'll just add a forward slash to the same pattern and place it at the end: `<\/[a-z]+>`
+2. There's a closing tag that follows the same pattern but has a forward slash before the tag name (`</TAG>`).  Seems like the same pattern would work, but we'll just add a forward slash to the same pattern and place it at the end: `<\/[a-z]+>`
 
 3. All that leaves is everything in between.  Since the content between can be anything, we'll just use `.*` to capture everything between.
 
@@ -232,13 +232,13 @@ Alright!  And that leaves us with:
 
 __\<span>HTML!\</span> to show how multiple tags \<i>can\</i>__
 
-Wait...that ain't right!  Okay, I looked on stack overflow and found [this post](https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags) the explained the problem is I tired to use Regex to parse something too complex, so this is really the wrong tool for the wrong job.  We've already come this far though, and another response on the same post mentioned it's possible for _limited known sets_ to be parsed appropriately.  Since that's what I've got in the example above, I'm going to change the exercise name from `Parse HTML tags` to `[^Parse] HTML tags` and carry on.
+Wait...that ain't right!  Okay, I looked on stack overflow and found [this post](https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags) the explained the problem is I tried to use Regex to parse something too complex, so this is really the wrong tool for the wrong job.  We've already come this far though, and another response on the same post mentioned it's possible for _limited known sets_ to be parsed appropriately.  Since that's what I've got in the example above, I'm going to change the exercise name from `Parse HTML tags` to `[^Parse] HTML tags` and carry on.
 
-The _real_ problem with this solution is there are two tags in the same line on this example, and Regex greadily matched everything from the first opening tag to the last opening tag.
+The _real_ problem with this solution is there are two tags in the same line on this example, and Regex greedily matched everything from the first opening tag to the last opening tag.
 
 There's a handful of ways we can fix this with the previous tools we've already learned so far, but since we're using capturing groups, let's do that.
 
-1. We'll start by modifying the first tag pattern by enclosing the part coresponding to the name into a capture group.  That simply means we'll change `<[a-z]+>` to `<([a-z]+)>`.
+1. We'll start by modifying the first tag pattern by enclosing the part corresponding to the name into a capture group.  That simply means we'll change `<[a-z]+>` to `<([a-z]+)>`.
 
 2. Now we can modify the closing tag by referencing the capture group in place of the pattern for the tag name to ensure the opening and closing tag have the same name.  This means we'll change `<\/[a-z]+>` to `<\/\1>`
 
@@ -248,14 +248,14 @@ real final: `<([a-z]+)>.*<\/\1>`
 #### b. Non-Capturing Groups
 Since we have limited IDs that can be assigned inside of any given Regex, if a pattern gets overly complex and we need to be picky with the ID system, or just don't need or want an ID there's a particular syntax we can use to tell Regex group but not capture.  This can be done by placing the characters `?:` at the beginning of a group, after the first parenthesis: `(?:...)`.  This doesn't have any impact on matching patterns, but keeps the memory clean of any groups found.
 
-Returning to the web address example above, we used a group to help capture URLs that both did and didn't have a preceeding `www.`.  Since this isn't the important part of the web address, we could easily modify the same pattern to also not remember that group and much more easily capture that part of the address that does matter:
+Returning to the web address example above, we used a group to help capture URLs that both did and didn't have a preceding `www.`.  Since this isn't the important part of the web address, we could easily modify the same pattern to also not remember that group and much more easily capture that part of the address that does matter:
 
 `(?:w{3}\.)?([\w-]+).com`
 
 With that slight change to the same pattern, it means the first reference will give us the `regex101` in `regex101.com` and the `bestbuy` in `www.bestbuy.com`.
 
 #### c. Assertions
-Assertions are similar to anchors where we can target specific patterns while also targeting surround information.  All four assertions are a type of group (so they're surrounded by parenthesis), contain their own pattern, and (similar to the non-capturing group) have a particular syntax to explain to Regex how to interpret the group.  What's special about assertions is they can be used to target a particular surrounding pattern, while not lumping the assertion into the same group.  These are great for interpeting serial numbers with important metadata built in, or finding an occurrance inside of a string where there's some other obvious marker that would clue into the correct one to find.  The four groups are:
+Assertions are similar to anchors where we can target specific patterns while also targeting surround information.  All four assertions are a type of group (so they're surrounded by parenthesis), contain their own pattern, and (similar to the non-capturing group) have a particular syntax to explain to Regex how to interpret the group.  What's special about assertions is they can be used to target a particular surrounding pattern, while not lumping the assertion into the same group.  These are great for interpreting serial numbers with important metadata built in, or finding an occurrence inside of a string where there's some other obvious marker that would clue into the correct one to find.  The four groups are:
 
 |Syntax|Name|Meaning|
 |:--|:--|:--|
@@ -267,8 +267,8 @@ Assertions are similar to anchors where we can target specific patterns while al
 A few things to keep in mind about these assertions:
 * Most engines have look-around support, but not all do.  If a pattern doesn't work as expected, this is the first thing I'll usually [check an engine's support for](https://en.wikipedia.org/wiki/Comparison_of_regular_expression_engines#Language_features).
 * Some engines only have support for lookaheads, but it's far more rare for only one look-around to be supported.  Many browsers went back and added support for lookbehinds in JavaScript within the [last few years](https://caniuse.com/js-regexp-lookbehind).
-* Because of the complexity for implementing lookbheinds, several engines require lookbehinds must have a fixed lenght to the pattern.  This means range quantifiers and shorthand quantifiers shouldn't be used in lookbehinds.
-* The quatifier rule does not apply to lookaheads ~ quantify to your heart's content on lookaheads
+* Because of the complexity for implementing lookbehinds, several engines require lookbehinds must have a fixed length to the pattern.  This means range quantifiers and shorthand quantifiers shouldn't be used in lookbehinds.
+* The quantifier rule does not apply to lookaheads ~ quantify to your heart's content on lookaheads
 
 ---
 ___EX: Find the manufacturing year for the serial number___
@@ -278,24 +278,24 @@ __13b-061972-202645<br>
 16b-501984-456754<br>
 1f-302002-349673__
 
-The above serial codes are a small sample of codes from the catelog of the fictional bio-medical company: `Medical Schmedical`.  They release a wide variety of bio-medical supplies ranging from artifical insulin to artificial joints.  This might look at first like a bunch of random numbers and letters but when looking through some documentation you find there's a pattern to the madness:
+The above serial codes are a small sample of codes from the catalog of the fictional bio-medical company: `Medical Schmedical`.  They release a wide variety of bio-medical supplies ranging from artificial insulin to artificial joints.  This might look at first like a bunch of random numbers and letters but when looking through some documentation you find there's a pattern to the madness:
 
 __|13|b|-|06|1972|-|202645|__
-1. Model #: 13 is an artifical knee
+1. Model #: 13 is an artificial knee
 1. Version: b means this model is a replacement for an older model
 1. Delimiter
 1. Warehouse: Made in warehouse #6
 1. Year: Made in 1972
-1. Delimter
+1. Delimiter
 1. Unique Identifier: 202645th item manufactured at warehouse #6 in 1972
 
-Since we now know the last 4 digits of the middle six is the year manufactured, we already know the final solution is going to need to include `\d{4}`.  Since there's two segements of six digits, though, we'll need to give Regex a little help in order to tell it which four digits we want.
+Since we now know the last 4 digits of the middle six is the year manufactured, we already know the final solution is going to need to include `\d{4}`.  Since there are two segments of six digits, though, we'll need to give Regex a little help in order to tell it which four digits we want.
 
 _Lookbehind Solution_
-1. If we want to use a lookbehind solution, we'll need to backtrack from the year to something unique between the last two segements
-1. If we backtrack two characters, we can see there's a combination of two digits before the four digits we want, but this doesn't make the solution unique between the last two segements yet: `\d{2}`
-1. Stepping back one character further shows us both of the last segments are preceeded by a hyphen as well, but we'll have to backtrack further because the pattern we've specified still isn't unique between the two segements: `-\d{2}`
-1. Going back one more character we now have something we can latch onto that's different.  If we go backward one more character we land on the model version.  Since this is the only non-digit character in the entire sequence, latching onto this will allow us to distinguish which of the two segments we have: `[a-z]-\d{2}`
+1. If we want to use a lookbehind solution, we'll need to backtrack from the year to something unique between the last two segments
+1. If we backtrack two characters, we can see there's a combination of two digits before the four digits we want, but this doesn't make the solution unique between the last two segments yet: `\d{2}`
+1. Stepping back one character further shows us both of the last segments are preceded by a hyphen as well, but we'll have to backtrack further because the pattern we've specified still isn't unique between the two segments: `-\d{2}`
+1. Going back one more character, we now have something we can latch onto that's different.  If we go backward one more character we land on the model version.  Since this is the only non-digit character in the entire sequence, latching onto this will allow us to distinguish which of the two segments we have: `[a-z]-\d{2}`
 
 Final: `(?<=[a-z]-\d{2})\d{4}`
 
@@ -308,7 +308,7 @@ Final: `\d{4}(?=-)`
 
 ### Flags
 
-The last subject we should briefly visit are the flags.  These all come after the delimiter in the pattern and modify how the engine interperts the pattern.  Every pattern can have zero or more flags, some of them will make finding things much more quickly with less complicated Regex patterns.  In the first paragraph, I said all of the patterns should be assumed to be `/g` so we have some basis with to learn.  Now that we're moving into more nuance here, we can finally discuss some of the more common flags that can be extremely useful.
+The last subject we should briefly visit are the flags.  These all come after the delimiter in the pattern and modify how the engine interprets the pattern.  Every pattern can have zero or more flags, some of them will make finding things much more quickly with less complicated Regex patterns.  In the first paragraph, I said all the patterns should be assumed to be `/g` so we have some basis with to learn.  Now that we're moving into more nuance here, we can finally discuss some of the more common flags that can be extremely useful.
 
 |Pattern|Flag|Description|
 |:--|:--|:--|
