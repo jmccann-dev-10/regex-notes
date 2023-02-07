@@ -126,12 +126,4 @@ Uncle Bob doesn't like Jim Bob, Joe Bob, or Billy Bob.
 - Only after "Jim": `(?<Jim)\sBob` 
 - After "Jim" or "Joe": `(?<=J(oe|im))\sBob` or `(?<=J\w{2})\sBob`
 - Only after "Billy": `(?<=Billy)\sBob` or `(?<=B\w{4})`
-- Finalized regex combination: `((?<=J(oe|im))|(?<=Billy))\sBob`80 steps
-- Alternative: `ll
-` 70 steps
-- Engine Alternative:  `(?<=(?<!^)[A-Z]\w+)\sBob` **CAUTION** This pattern has some issues...
-    - This statement only works in engines that support non-fixed width assertions (does not include Java unfortunately)
-    - The key problem here is `\w+`since it will make the assertion of a variable length.
-    - This statement includes a nested assertion `(?<!^)` (i.e. NOT preceded by the start of the line).  To exclude "Uncle" since the first letter of a sentence will be capitalized.
-    - The outer assertion then is meant to catch any capitalized word NOT at the start of a sentence `(?<=(?<!^)[A-Z]\w+)`
-    - Attentive readers will probably notice that this would NOT match "Billy Bob" (or any of our other targets) if it starts a sentence...which is a problem.  This just goes to show the pitfalls of trying to be too broad/flexible with a pattern.
+- - Finalized regex combination: `(?<=J\w{2}|B\w{4})\sBob`
