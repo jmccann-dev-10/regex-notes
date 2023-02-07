@@ -126,5 +126,4 @@ Uncle Bob doesn't like Jim Bob, Joe Bob, or Billy Bob.
 - Only after "Jim": `(?<Jim)\sBob` 
 - After "Jim" or "Joe": `(?<=J(oe|im))\sBob` or `(?<=J\w{2})\sBob`
 - Only after "Billy": `(?<=Billy)\sBob` or `(?<=B\w{4})`
-- Finalized regex combination: `((?<=J(oe|im))|(?<=Billy))\sBob`80 steps
-- Alternative: `((?<=J\w{2})|(?<=B\w{4}))\sBob` 70 steps
+- Finalized regex combination: `(?<=J\w{2}|B\w{4})\sBob`
