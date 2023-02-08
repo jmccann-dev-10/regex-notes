@@ -1,4 +1,4 @@
-package learn.regex;
+package learn.regex.domain;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

@@ -1,5 +1,6 @@
 package learn.regex
 
+import learn.regex.domain.RegexTester
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 
