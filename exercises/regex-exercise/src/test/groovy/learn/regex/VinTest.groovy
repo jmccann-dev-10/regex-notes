@@ -45,7 +45,7 @@ class VinTest {
         String regex = /REGEX HERE/
         List<String> vinsMadeIn2002 = regexTester.findAll(regex)
 
-        assertEquals(11, vinsMadeIn2002.size())
+        assertEquals(21, vinsMadeIn2002.size())
     }
 
     // HINT: You may want to use this: https://en.wikibooks.org/wiki/Vehicle_Identification_Numbers_(VIN_codes)/Honda/VIN_Codes#Americas
