@@ -18,7 +18,7 @@ class PhonebookTest {
 
     @Test
     void findEntriesFromNJ() {
-        String regex = /REGEX HERE/
+        String regex = /.*NJ.*/
         List<String> phonebookEntryInNewJersey = regexTester.findAll(regex)
 
         assertEquals(20, phonebookEntryInNewJersey.size())
@@ -26,7 +26,7 @@ class PhonebookTest {
 
     @Test
     void findAddressesWithExactZipCodes() {
-        String regex = /REGEX HERE/
+        String regex = /\b(?<=~ ).*\d{5}-\d{4}/
         List<String> addresses = regexTester.findAll(regex)
 
         assertEquals(471, addresses.size())
@@ -34,7 +34,7 @@ class PhonebookTest {
 
     @Test
     void findNamesOfPeopleWhomLiveOnMainStreet() {
-        String regex = /REGEX HERE/
+        String regex = /^[A-Za-z, ]+(?=:[\dA-Za-z~ -]+Main)/
         List<String> names = regexTester.findAll(regex)
 
         assertEquals(30, names.size())
@@ -52,7 +52,7 @@ class PhonebookTest {
 
     @Test
     void findFirstNamesOfPeopleWithTheLastNameSmith() {
-        String regex = /REGEX HERE/
+        String regex = /\b(?<=Smith, )[A-Z][a-z]+/
         List<String> states = regexTester.findAll(regex)
 
         assertEquals(3, states.size())
@@ -68,7 +68,7 @@ class PhonebookTest {
     void findAddressesWithInvalidPhoneNumbers() {
         // Some of the phone numbers start with a 0, we need the addresses so we can send them a card in the mail to update their phone numbers
 
-        String regex = /REGEX HERE/
+        String regex = /\b(?<=0\d{2}-\d{3}-\d{4} ~ ).*/
         List<String> addressesWithInvalidPhoneNumbers = regexTester.findAll(regex)
 
         assertEquals(101, addressesWithInvalidPhoneNumbers.size())

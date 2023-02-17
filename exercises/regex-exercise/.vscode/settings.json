@@ -1,0 +1,11 @@
+{
+  "java.project.sourcePaths": ["src"], 
+  "java.project.outputPath": "target",
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar"
+  ],
+  "java.test.config": {
+    "testKind": "junit",
+    "workingDirectory": "src/test/groovy"
+  }
+}

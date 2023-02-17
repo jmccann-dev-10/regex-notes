@@ -2,51 +2,51 @@ package learn.regex.model;
 
 public class Person {
     
-    public String firstName;
-    public String lastName;
+    private String firstName;
+    private String lastName;
     
-    protected int age;
+    private int age;
     
-    public String getHairColor;
-    protected boolean isPrivate;
+    private String getHairColor;
+    private boolean isPrivate;
 
-    private String getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    protected void setFirstName(String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    protected String getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
-    protected void setLastName(String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    private int getAge() {
+    public int getAge() {
         return age;
     }
 
-    private void setAge(int age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
-    protected String getGetHairColor() {
+    public String getGetHairColor() {
         return getHairColor;
     }
 
-    protected void setGetHairColor(String getHairColor) {
+    public void setGetHairColor(String getHairColor) {
         this.getHairColor = getHairColor;
     }
 
-    protected boolean isPrivate() {
+    public boolean isPrivate() {
         return isPrivate;
     }
 
-    private void setPrivate(boolean aPrivate) {
+    public void setPrivate(boolean aPrivate) {
         isPrivate = aPrivate;
     }
 }

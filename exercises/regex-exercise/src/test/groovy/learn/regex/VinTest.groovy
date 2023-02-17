@@ -19,7 +19,7 @@ class VinTest {
 
     @Test
     void findValidVins() {
-        String regex = /REGEX HERE/
+        String regex = /^[^OIQ]{17}$/
         List<String> validVins = regexTester.findAll(regex)
 
         assertEquals(499, validVins.size())
@@ -27,7 +27,7 @@ class VinTest {
 
     @Test
     void findInvalidVins() {
-        String regex = /REGEX HERE/
+        String regex = /\b(.*?[OIQ].*|[^OIQ\s]{1,16}|[^OIQ\s]{18,})\b/
         List<String> invalidVins = regexTester.findAll(regex)
 
         assertEquals(35, invalidVins.size())
@@ -35,7 +35,7 @@ class VinTest {
 
     @Test
     void findValidVinsMadeInJapan() {
-        String regex = /REGEX HERE/
+        String regex = /^J[^OIQ]{16}/
         List<String> vehicleVinsMadeInJapan = regexTester.findAll(regex)
 
         assertEquals(56, vehicleVinsMadeInJapan.size())
@@ -43,7 +43,7 @@ class VinTest {
 
     @Test
     void findValidVinsMadeIn2002() {
-        String regex = /REGEX HERE/
+        String regex = /^[^OIQ]{9}2[^OIQ]{6}/
         List<String> vinsMadeIn2002 = regexTester.findAll(regex)
 
         assertEquals(21, vinsMadeIn2002.size())
@@ -53,7 +53,7 @@ class VinTest {
 
     @Test
     void findCanadianMadeHondaVinsMadeFrom2003To2013_CHALLENGE() {
-        String regex = /REGEX HERE/
+        String regex = /^2H[GHKJNU][^OIQ]{6}[3-9A-D][^OIQ]{6}/
         List<String> canadianMadeHondasFrom2010To2013 = regexTester.findAll(regex)
         assertEquals(5, canadianMadeHondasFrom2010To2013.size())
     }
